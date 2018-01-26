@@ -54,7 +54,9 @@ class ListType extends ComplexType{
         super("list");
         this.elementType = TAny;
     }
-
+    toString(){
+        return "List[" + this.elementType.toString() + "]"
+    }
 }
 
 export class DictType extends ComplexType{
