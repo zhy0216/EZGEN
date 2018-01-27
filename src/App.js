@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-
+import {EZen} from "./EZen";
 
 class AppInput extends React.Component {
 
@@ -11,8 +11,9 @@ class AppInput extends React.Component {
 
 class AppOutput extends React.Component {
     render(){
-        return <div className="App-output">{this.props.data} First pass the data from the child to the parent, as an argument into a callback from the parent. Set this incoming parameter as a state on the parent component, then pass it as a prop to the other child (see above example). The sibling can
-        </div>;
+        return (<pre className="App-output">
+                    <code>{this.props.data}</code>
+                </pre>);
     }
 }
 
@@ -23,7 +24,7 @@ class App extends Component {
             json: "",
             data: ""
         };
-
+        this.ezen = new EZen();
 
     }
 
@@ -32,13 +33,18 @@ class App extends Component {
         let newJson = null;
         try{
             newJson = JSON.parse(newString);
+            if(typeof newJson !== "object"){
+                throw new Error("please pass an object");
+            }
         }catch(error) {
             this.setState({data: error.toString()});
             return
         }
         if(newJson !== null && newJson !== this.state.json){
             this.setState({json: newJson});
-            let data = newString;
+            this.ezen.clear();
+            this.ezen.generateTypes(newJson);
+            let data = this.ezen.outputMarshMallow();
             this.setState({data: data});
         }
 
