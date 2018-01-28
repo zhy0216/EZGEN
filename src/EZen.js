@@ -6,6 +6,10 @@ class Type{
     toString(){
         return this.name;
     }
+
+    getClassifyName(){
+        return capitalizeFirst(snakeToCamel(this.name));
+    }
 }
 
 class AtomType extends Type{
@@ -78,6 +82,22 @@ export class DictType extends ComplexType{
     }
 }
 
+function capitalizeFirst(string) {
+    if (typeof string !== "string" || string.length === 0){
+        return string;
+    }
+    return string[0].toUpperCase() + string.slice(1);
+}
+
+function isSnakeName(string){
+    return string.indexOf("_") > 0
+}
+
+function snakeToCamel(string) {
+    return string.replace(/(_\w)/g, function(m){return m[1].toUpperCase();});
+}
+
+
 export class EZen{
     constructor() {
         this.result = []
@@ -121,9 +141,9 @@ export class EZen{
         if(type instanceof AtomType){
             return `${keyname} = fields.${type}()`
         }else if(type instanceof ListType){
-            return `${keyname} = fields.List(fields.${type}())`
+            return `${keyname} = fields.List(fields.${type})`
         }else if(type instanceof DictType){
-            return `${keyname} = fields.Nested(${type.name}Schema)`
+            return `${keyname} = fields.Nested(${type.getClassifyName()}Schema)`
         }
         throw Error(`type:${type} error`)
 
@@ -134,11 +154,11 @@ export class EZen{
         let lines = [];
         for(const type of this.result){
             if(type instanceof DictType) {
-                lines.push(`Class ${type.name}:`);
+                lines.push(`Class ${type.getClassifyName()}Schema:`);
                 console.log(type);
                 Object.keys(type.typeDict).forEach((key) => {
                     lines.push("    " + this._outputMarshMallowCoulmn(key, type.typeDict[key]));
-                })
+                });
                 lines.push("\n")
             }
         }
