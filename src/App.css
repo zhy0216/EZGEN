@@ -1,6 +1,3 @@
-.App {
-  text-align: center;
-}
 
 .App-header {
   background-color: #222;
@@ -19,14 +16,34 @@
     justify-content: space-around;
 }
 
+
 .App-input {
     width: 45%;
-    margin-top: 40px;
-	height: 600px;
+    margin-top: 20px;
+}
+
+.App-input select{
+    background-color: #3b8ec2;
+    float:right;
+    height: 30px;
+    width: 240px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.App-input textarea{
+    display: block;
+    width: 100%;
+    height: 600px;
 	border: 3px solid #cccccc;
     font-size: 1.16em;
 	padding: 15px;
+    box-sizing: border-box;
 }
+
 .App-output {
     width: 45%;
     margin-top: 40px;

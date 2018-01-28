@@ -141,7 +141,7 @@ export class EZen{
         if(type instanceof AtomType){
             return `${keyname} = fields.${type}()`
         }else if(type instanceof ListType){
-            return `${keyname} = fields.List(fields.${type})`
+            return `${keyname} = fields.List(fields.${type.elementType})`
         }else if(type instanceof DictType){
             return `${keyname} = fields.Nested(${type.getClassifyName()}Schema)`
         }
@@ -154,7 +154,7 @@ export class EZen{
         let lines = [];
         for(const type of this.result){
             if(type instanceof DictType) {
-                lines.push(`Class ${type.getClassifyName()}Schema:`);
+                lines.push(`Class ${type.getClassifyName()}Schema(Schema):`);
                 console.log(type);
                 Object.keys(type.typeDict).forEach((key) => {
                     lines.push("    " + this._outputMarshMallowCoulmn(key, type.typeDict[key]));
