@@ -7,6 +7,10 @@ class Type{
         return this.name;
     }
 
+    toMashmallowType(){
+        return `fields.${this.name}()`;
+    }
+
     getClassifyName(){
         return capitalizeFirst(snakeToCamel(this.name));
     }
@@ -58,6 +62,9 @@ class ListType extends ComplexType{
         super("list");
         this.elementType = TAny;
     }
+    toMashmallowType(){
+        return `fields.List(${this.elementType.toMashmallowType()})`
+    }
     toString(){
         return "List[" + this.elementType.toString() + "]"
     }
@@ -71,6 +78,10 @@ export class DictType extends ComplexType{
 
     add(key, type){
         this.typeDict[key] = type;
+    }
+
+    toMashmallowType(){
+        return `fields.Nested(${this.getClassifyName()}Schema)`
     }
 
     toString(){
@@ -138,15 +149,7 @@ export class EZen{
     }
 
     _outputMarshMallowCoulmn(keyname, type){
-        if(type instanceof AtomType){
-            return `${keyname} = fields.${type}()`
-        }else if(type instanceof ListType){
-            return `${keyname} = fields.List(fields.${type.elementType})`
-        }else if(type instanceof DictType){
-            return `${keyname} = fields.Nested(${type.getClassifyName()}Schema)`
-        }
-        throw Error(`type:${type} error`)
-
+        return `${keyname} = ${type.toMashmallowType()}`;
     }
 
     outputMarshMallow(config){
