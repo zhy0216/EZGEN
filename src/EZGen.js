@@ -108,6 +108,20 @@ function snakeToCamel(string) {
     return string.replace(/(_\w)/g, function(m){return m[1].toUpperCase();});
 }
 
+export function camelToSnake(string){
+    let divideParts = [];
+    let iend = string.length;
+    for(let i = string.length - 1; i > 0; i --){
+        if('A' <= string[i] && string[i] <= 'Z'){
+            divideParts.push(string.slice(i, iend).toLowerCase());
+            iend = i;
+        }
+    }
+    divideParts.push(string.slice(0, iend).toLowerCase());
+
+    return divideParts.reverse().join("_");
+}
+
 
 export class EZen{
     constructor() {
