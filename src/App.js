@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
-import {EZen} from "./EZen";
+import {EZen} from "./EZGen";
 
 
 const EXAMPLE1 = `{
-  "address": {
-    "state": "CA",
-    "city": "San Francisco"
+  "artist": {
+    "name": "David Bowie"
   },
-  "interests": [
-    "games"
-  ],
-  "name": "Yang"
+  "release_date": "1971-12-17",
+  "title": "Hunky Dory"
 }`;
+
+const EXAMPLE2 = `{
+    "deepNestedList":[[[[{"nestedObj":[1,2,3]}]]]],
+    "name":"example 2"
+}`
+
 
 class AppInput extends React.Component {
     constructor(props){
@@ -35,7 +38,7 @@ class AppInput extends React.Component {
         return (<div className="App-input">
             <select onChange={this.handleChange.bind(this)} name="text">
                 <option value={EXAMPLE1}>Example 1</option>
-                <option value={EXAMPLE1}>Example 2</option>
+                <option value={EXAMPLE2}>Example 2</option>
                 <option value={EXAMPLE1}>Example 3</option>
             </select>
             <textarea onChange={this.handleChange.bind(this)} value={this.state.value}></textarea>

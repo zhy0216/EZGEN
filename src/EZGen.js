@@ -8,7 +8,7 @@ class Type{
     }
 
     toMashmallowType(){
-        return `fields.${this.name}()`;
+        return `fields.${capitalizeFirst(this.name)}()`;
     }
 
     getClassifyName(){

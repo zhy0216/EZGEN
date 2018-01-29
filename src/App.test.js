@@ -1,5 +1,5 @@
 import React from 'react';
-import {generateTypes, TInt, DictType} from './EZen';
+import {generateTypes, TInt, DictType} from './EZGen';
 
 it('simple data', () => {
     const data = {
