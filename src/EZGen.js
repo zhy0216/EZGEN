@@ -133,7 +133,6 @@ export class EZen{
             this.result.pop()
     }
 
-
     generateHelper(data, className) {
         let type = getType(data);
         if (type === "int") {
@@ -162,25 +161,19 @@ export class EZen{
         this.generateHelper(data, className);
     }
 
-    _outputMarshMallowCoulmn(keyname, type){
-        return `${keyname} = ${type.toMashmallowType()}`;
-    }
-
     outputMarshMallow(config){
         config = config || {};
         let lines = [];
         for(const type of this.result){
             if(type instanceof DictType) {
-                lines.push(`Class ${type.getClassifyName()}Schema(Schema):`);
-                console.log(type);
+                lines.push(`class ${type.getClassifyName()}Schema(Schema):`);
+                // console.log(type);
                 Object.keys(type.typeDict).forEach((key) => {
-                    lines.push("    " + this._outputMarshMallowCoulmn(key, type.typeDict[key]));
+                    lines.push(`    ${camelToSnake(key)} = ${type.typeDict[key].toMashmallowType()}`);
                 });
                 lines.push("\n")
             }
         }
         return lines.join("\n")
-
     }
-
 }

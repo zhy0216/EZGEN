@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import SyntaxHighlighter from 'react-syntax-highlighter/prism';
+
 import './App.css';
 import {EZen} from "./EZGen";
 
@@ -48,9 +50,7 @@ class AppInput extends React.Component {
 
 class AppOutput extends React.Component {
     render(){
-        return (<pre className="App-output">
-                    <code>{this.props.data}</code>
-                </pre>);
+        return (<div className="App-output"><SyntaxHighlighter language='python'>{this.props.data}</SyntaxHighlighter></div>);
     }
 }
 
